@@ -38,6 +38,9 @@ class IngredientController extends AbstractController
             $ingredient = $form->getData();
             $manager->persist($ingredient);
             $manager->flush();
+            $this->addFlash(
+                'success','Votre ingrédient a été créé avec succès!'
+            );
             return $this->redirectToRoute('app_ingredient');
         }
         return $this->render('pages/ingredient/new.html.twig',[
