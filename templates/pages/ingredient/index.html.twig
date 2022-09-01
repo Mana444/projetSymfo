@@ -8,6 +8,11 @@
         {% if not ingredients.items is same as ([]) %}
         <h1>Mes Ingrédients</h1>
 
+            {# TODO definir les href # ici et header #}
+
+            <a href="#" class="btn btn-primary">
+                Créer un ingrédient
+            </a>
             {# read and display just one flash message type #}
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success mt-4">
