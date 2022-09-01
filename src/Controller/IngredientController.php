@@ -72,12 +72,7 @@ class IngredientController extends AbstractController
     public function delete(EntityManagerInterface $manager,Ingredient $ingredient) : Response {
 
     /**
-     * if($ingredient->null){
-    $this->addFlash(
-    'success','ingrédient introuvable!'
-    );
-    return $this->redirectToRoute('app_ingredient');
-    }
+    Appelle $ingredient de l'Entity Ingredient pour récup {id} et le passer au manager pour le push en db
     **/
         $manager->remove($ingredient);
         $manager->flush();

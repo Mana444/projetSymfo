@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('name')]
 class Ingredient
 {
-    public $null;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
