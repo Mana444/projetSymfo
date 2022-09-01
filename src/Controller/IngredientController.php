@@ -28,7 +28,7 @@ class IngredientController extends AbstractController
             'ingredients' => $ingredients
         ]);
     }
-    #[Route('/ingredient/nouveau','ingredient.new',methods: ['GET','POST'])]
+    #[Route('/ingredient/nouveau','ingredient_new',methods: ['GET','POST'])]
     public function new(Request $request,EntityManagerInterface $manager) : Response
     {
         $ingredient = new Ingredient ();
