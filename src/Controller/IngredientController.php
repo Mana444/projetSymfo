@@ -47,4 +47,17 @@ class IngredientController extends AbstractController
             'form'=>$form->createView()
         ]);
     }
+    /** function qui affiche un formulaire et qui recuprère l'ingredient avec FindOneBy du Repository pour Update un ingrédient
+    **/
+    #[Route('/ingredient/edition/{id}','ingredient_edit',methods: ['GET','POST'])]
+    public function edit(IngredientRepository $repository, int $id) : Response
+    {
+        $ingredient = $repository->findOneBy(["id"=>$id]);
+        $form =$this->createForm(IngredientType::class,$ingredient);
+        return $this->render('pages/ingredient/edit.html.twig', [
+            'form'=>$form->createView()
+        ]);
+
+    }
+
 }
