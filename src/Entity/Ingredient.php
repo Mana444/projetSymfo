@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\IngredientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -31,12 +33,16 @@ class Ingredient
     #[ORM\Column]
     #[Assert\NotNull]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'ingredients')]
+    private Collection $recettes;
     /**
      *Constructeur du Datetime pour que ce soit générer Auto
      */
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->recettes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +82,33 @@ class Ingredient
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recette>
+     */
+    public function getRecettes(): Collection
+    {
+        return $this->recettes;
+    }
+
+    public function addRecette(Recette $recette): self
+    {
+        if (!$this->recettes->contains($recette)) {
+            $this->recettes->add($recette);
+            $recette->addIngredient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecette(Recette $recette): self
+    {
+        if ($this->recettes->removeElement($recette)) {
+            $recette->removeIngredient($this);
+        }
 
         return $this;
     }
