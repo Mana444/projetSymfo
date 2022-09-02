@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity('name')]
 class Recette
 {
@@ -58,19 +59,27 @@ class Recette
 
     #[ORM\Column]
     #[Assert\NotNull]
-    private \DateTimeImmutable $updateAt;
+    private \DateTimeImmutable $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recettes')]
     private Collection $ingredients;
 
+    /** j'initialise les attributs ingredients,createdAt, UpdatedAt
+    **/
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
-        $this->updateAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
-/** TODO function pour créer updateAt auto
+
+/**  function pour créer une date de misa a jour auto (updateAt auto)
 **/
+    #[ORM\PrePersist]
+    public function setUpdatedDateValue()
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
     public function getId(): ?int
     {
         return $this->id;
