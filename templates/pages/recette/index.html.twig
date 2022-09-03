@@ -1,0 +1,77 @@
+{% extends './base.html.twig' %}
+
+{% block title %}My Recettes-Mes recettes{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        {% if not recettes.items is same as ([]) %}
+            <h1>Mes Recettes</h1>
+
+            {# comment #}
+
+            <a href="{{path('app_recette_new')}}" class="btn btn-primary">
+                Créer une recette
+            </a>
+            {# read and display just one flash message type #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {# total items count #}
+            <div class="count mt-4">
+                <h4>Il y a {{ recettes.getTotalItemCount }} recettes au total</h4>
+            </div>
+            <table class="table table-hover ">
+                <thead>
+                <tr>
+                    <th scope="col">Numéro</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Difficulté</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Edition</th>
+                    <th scope="col">Suppression</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for recette in recettes %}
+                    <tr >
+                        <th scope="row">{{ recette.id }}</th>
+                        <td>{{ recette.name }}</td>
+                        <td>
+                            {%  if recette.price is null %}
+                            Non renseigné
+                            {% else  %}
+                            {{ recette.price }}
+                                {% endif %}
+                        </td>
+                        <td>{%  if recette.difficulty is null %}
+                                Non renseigné
+                            {% else  %}
+                                {{ recette.difficulty }}
+                            {% endif %}
+                        </td>
+                        <td>{{ recette.createdAt|date('d/m/Y') }}</td>
+
+                        <td>
+                            Todo
+                        </td>
+                        <td>
+                            Todo
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {# display navigation #}
+            <div class="navigation d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(recettes) }}
+            </div>
+        {% else %}
+            <h4>Il n'y a pas de recettes</h4>
+        {% endif %}
+    </div>
+{% endblock %}
