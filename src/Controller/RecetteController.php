@@ -50,4 +50,26 @@ class RecetteController extends AbstractController
             'form'=>$form->createView()
         ]);
     }
+    /** function qui affiche un formulaire et qui recuprère la recette avec FindOneBy du Repository pour la Update
+     **/
+    #[Route('/recette/edition/{id}','recette_edit',methods: ['GET','POST'])]
+    public function edit(Recette $recette,Request $request,EntityManagerInterface $manager) : Response
+    {
+        $form =$this->createForm(RecetteType::class,$recette);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()){
+            $recette = $form->getData();
+            $manager->persist($recette);
+            $manager->flush();
+            $this->addFlash(
+                'success','Votre recette a été modifié avec succès!'
+            );
+            return $this->redirectToRoute('app_recette');
+        }
+        return $this->render('pages/recette/edit.html.twig', [
+            'form'=>$form->createView()
+        ]);
+
+    }
+
 }

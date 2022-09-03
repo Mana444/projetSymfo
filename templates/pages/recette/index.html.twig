@@ -57,7 +57,8 @@
                         <td>{{ recette.createdAt|date('d/m/Y') }}</td>
 
                         <td>
-                            Todo
+                            <a href="{{ path('app_recette_edit',{id:recette.id}) }}" class="btn btn-info">Modifier</a>
+
                         </td>
                         <td>
                             Todo
