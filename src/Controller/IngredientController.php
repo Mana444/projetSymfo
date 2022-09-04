@@ -72,7 +72,7 @@ class IngredientController extends AbstractController
     public function delete(EntityManagerInterface $manager,Ingredient $ingredient) : Response {
 
     /**
-    Appelle $ingredient de l'Entity Ingredient pour récup {id} et le passer au manager pour le push en db
+    Appelle $ingredient de l'Entity Ingredient pour récup {id} et le passer au manager pour le remove en db
     **/
         $manager->remove($ingredient);
         $manager->flush();

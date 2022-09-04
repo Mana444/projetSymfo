@@ -71,5 +71,18 @@ class RecetteController extends AbstractController
         ]);
 
     }
+    #[Route('/recette/suppression/{id}','recette_delete',methods: ['GET'])]
+    public function delete(EntityManagerInterface $manager,Recette $recette) : Response {
+
+        /**
+        Appelle $ingredient de l'Entity Ingredient pour récup {id} et le passer au manager pour le remove en db
+         **/
+        $manager->remove($recette);
+        $manager->flush();
+        $this->addFlash(
+            'success','Votre recette a été supprimé avec succès!'
+        );
+        return $this->redirectToRoute('app_recette');
+    }
 
 }
