@@ -144,6 +144,11 @@ class RecetteType extends AbstractType
                 'multiple'=>'true',
                 'expanded' => 'true'
                 ])
+            ->add('submit',SubmitType::class,[
+                'attr'=>[
+                    'class'=>'btn btn-primary mt-4'
+                ],
+                'label'=>'Créer ma recette'])
         ;
     }
 
